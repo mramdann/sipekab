@@ -11,9 +11,10 @@ include "_menu.php";
       <div class="page-inner">
 
         <?php if ($view == 'list' or $view == NULL) { ?>
+
           <!-- tampilan data user -->
           <header class="page-title-bar">
-            <div class="d-md-flex align-items-md-start">
+            <div class="d-flex justify-content-between">
               <h1 class="page-title mr-sm-auto"> Data User </h1>
               <div class="btn-toolbar">
                 <a href="user.php?aksi=tambah" class="btn btn-success"><i class="fa fa-plus"></i> <span class="ml-1">Tambah User</span></a>

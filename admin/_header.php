@@ -17,6 +17,7 @@ include "../koneksi.php";
   <link rel="stylesheet" href="../assets/vendor/open-iconic/font/css/open-iconic-bootstrap.min.css">
   <link rel="stylesheet" href="../assets/vendor/%40fortawesome/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../assets/stylesheets/theme.min.css" data-skin="default">
+  <link rel="stylesheet" href="../assets/vendor/summernote/summernote-bs4.min.css" data-skin="default">
   <link rel="stylesheet" href="../assets/stylesheets/theme-dark.min.css" data-skin="dark">
   <link rel="stylesheet" href="../assets/stylesheets/custom.css">
   <script>
