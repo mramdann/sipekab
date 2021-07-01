@@ -39,7 +39,7 @@
               <use class="fill-primary" xlink:href="#a"></use>
             </g>
           </svg></a>
-        <a class="navbar-btn btn btn-subtle-primary ml-auto order-lg-2" href="#">Pengumuman</a>
+        <a class="navbar-btn btn btn-subtle-success ml-auto order-lg-2" href="#">Pengumuman</a>
         <div class="navbar-collapse collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item mr-lg-3 active">
@@ -49,7 +49,7 @@
               <a class="nav-link py-2" href="#">Lowongan Kerja</a>
             </li>
             <li class="nav-item mr-lg-3">
-              <a class="nav-link py-2" href="#">Pengumuman</a>
+              <a class="nav-link py-2" href="#">Tentang</a>
             </li>
           </ul>
         </div>
