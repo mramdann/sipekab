@@ -1,6 +1,6 @@
 <?php session_start();
 if (empty($_SESSION['profile'])) {
-  echo "<script>location='../login.php'</script>";
+  echo "<script>location='login.php'</script>";
 }
 include "../koneksi.php";
 ?>
