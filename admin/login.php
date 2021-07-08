@@ -10,14 +10,12 @@ if (isset($_SESSION['profile'])) {
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!-- End Required meta tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Halaman Login</title>
-  <!-- Favicons -->
-  <meta name="theme-color" content="#3063A0"><!-- Google font -->
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End Google font -->
-  <!-- BEGIN PLUGINS STYLES -->
-  <link rel="stylesheet" href="../assets/vendor/%40fortawesome/fontawesome-free/css/all.min.css"><!-- END PLUGINS STYLES -->
-  <!-- BEGIN THEME STYLES -->
+
+  <meta name="theme-color" content="#3063A0">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/vendor/%40fortawesome/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../assets/stylesheets/theme.min.css" data-skin="default">
   <link rel="stylesheet" href="../assets/stylesheets/theme-dark.min.css" data-skin="dark">
   <link rel="stylesheet" href="../assets/stylesheets/custom.css">
@@ -82,17 +80,17 @@ if (isset($_SESSION['profile'])) {
     }
     ?>
 
-    <div id="announcement" class="auth-announcement" style="background-image: url(../assets/images/illustration/img-1.png);">
+    <div id="announcement" class="auth-announcement">
       <div class="announcement-body">
-        <h2 class="announcement-title"> How to Prepare for an Automated Future </h2><a href="#" class="btn btn-warning"><i class="fa fa-fw fa-angle-right"></i> Check Out Now</a>
+        <h2 class="announcement-title"> Sistem Informasi Penerimaan Karyawan Baru PT. STARPIA ARTWORK CENTER PURWAKARTA </h2><a href="../loker.php" class="btn btn-warning"><i class="fa fa-fw fa-angle-right"></i> Check Loker</a>
       </div>
     </div>
   </main>
 
   <script src="../assets/vendor/jquery/jquery.min.js"></script>
   <script src="../assets/vendor/popper.js/umd/popper.min.js"></script>
-  <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script> <!-- END BASE JS -->
-  <script src="../assets/javascript/theme.min.js"></script> <!-- END THEME JS -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../assets/javascript/theme.min.js"></script>
 
 </body>
 

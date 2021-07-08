@@ -46,6 +46,9 @@
                         <li class="nav-item mr-lg-3 active">
                             <a class="nav-link py-2" href="about.php">Tentang Kami</a>
                         </li>
+                        <li class="nav-item mr-lg-3 active">
+                            <a class="nav-link py-2" href="admin">Admin</a>
+                        </li>
                     </ul>
                 </div>
             </div>

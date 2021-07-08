@@ -1,7 +1,7 @@
 <?php
 $view = $_GET['aksi'];
 
-echo "<title>" . $view . " data loker</title>";
+echo "<title>" . $view . " pelamar kerja</title>";
 include "_header.php";
 include "_menu.php";
 ?>
@@ -15,10 +15,7 @@ include "_menu.php";
                     <!-- tampilan data loker -->
                     <header class="page-title-bar">
                         <div class="d-flex justify-content-between">
-                            <h1 class="page-title mr-sm-auto"> Data Lowongan Pekerjaan </h1>
-                            <div class="btn-toolbar">
-                                <a href="loker.php?aksi=tambah" class="btn btn-success"><i class="fa fa-plus"></i> <span class="ml-1">Tambah</span></a>
-                            </div>
+                            <h1 class="page-title mr-sm-auto"> Data Pelamar Kerja </h1>
                         </div>
                     </header>
                     <div class="page-section">
@@ -36,7 +33,11 @@ include "_menu.php";
 
                                 <?php
                                 $sql = $koneksi->query("select * from tbl_loker order by id_loker desc");
-                                while ($data = $sql->fetch_assoc()) { ?>
+                                while ($data = $sql->fetch_assoc()) {
+                                    $id_loker = $data['id_loker'];
+                                    $query = $koneksi->query("SELECT COUNT(*) AS JLH FROM tbl_lamaran_pekerjaan WHERE id_loker ='$id_loker'");
+                                    $jlh = $query->fetch_assoc();
+                                    $jumlah_pelamar = $jlh['JLH']; ?>
                                     <div class="list-group-item mb-2">
                                         <div class="list-group-item-figure">
                                             <a href="javascript:void(0)" class="tile tile-circle bg-indigo text-white mr-1"><?= strtoupper(substr($data['judul_loker'], 0, 1)) ?></a>
@@ -45,7 +46,7 @@ include "_menu.php";
                                             <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
                                                 <div class="team">
                                                     <h4 class="list-group-item-title">
-                                                        <a href="loker.php?aksi=edit&id=<?= $data['id_loker'] ?>"><?= $data['judul_loker'] ?></a>
+                                                        <a href="lamaran.php?aksi=detail&id=<?= $data['id_loker'] ?>"><?= $data['judul_loker'] ?></a>
                                                     </h4>
                                                     <span class="timeline-date">
                                                         <span class="text-muted"><i class="far fa-fw fa-calendar"></i> <?= date("M d, Y", strtotime($data['tgl_update'])) ?> </span>
@@ -53,13 +54,13 @@ include "_menu.php";
                                                 </div>
                                                 <ul class="list-inline text-muted mb-0">
                                                     <li class="list-inline-item">
-                                                        <i class="fas fa-users"></i> Jumlah pelamar 15
+                                                        <i class="fas fa-users"></i> Jumlah pelamar <?= $jumlah_pelamar ?>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="list-group-item-figure">
-                                            <a href="loker.php?aksi=edit&id=<?= $data['id_loker'] ?>" class="btn btn-sm btn-icon btn-light mr-2"><i class="fas fa-info-circle text-info mt-2"></i></i></a>
+                                            <a href="lamaran.php?aksi=detail&id=<?= $data['id_loker'] ?>" class="btn btn-sm btn-icon btn-light mr-2"><i class="fas fa-info-circle text-info mt-2"></i></i></a>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -70,106 +71,133 @@ include "_menu.php";
                     </div>
                     <!-- # tampilan data loker -->
 
+                <?php } else if ($view == 'detail') {
+                    // menangkap id yang akan di edit dari url 
+                    $id = $_GET['id'];
+                    // ambil data berdasarkan id yang dikirim url lalu tampilkan
+                    $sql = $koneksi->query("select * from tbl_loker where id_loker = '$id'");
+                    $loker = $sql->fetch_assoc();
 
-                <?php } else if ($view == 'tambah') {
-
-                    // Syntax untuk menyimpan data ke tbl_user jika tombol simpan ditekan
-                    if (isset($_POST['simpan'])) {
-                        $username = $_POST['username'];
-                        $nama_user = $_POST['nama_user'];
-                        $pass = $_POST['pass'];
-
-                        $query_simpan = $koneksi->query("INSERT INTO tbl_user (username, pass, nama_user) VALUES ('$username','$pass','$nama_user')");
-
-                        if ($query_simpan) {
-                            echo "<script>alert('Data berhasil disimpan !')</script>";
-                            echo "<script>location='loker.php?aksi=list'</script>";
-                        } else {
-                            echo "<script>alert('Data gagal disimpan !')</script>";
-                            echo "<script>location='loker.php?aksi=tambah'</script>";
-                        }
+                    if (date("Y-m-d") >= $loker['tgl_berlaku']) {
+                        $status = "danger";
+                    } else {
+                        $status = "success";
                     } ?>
 
-                    <!-- # tampilan Tambah data loker -->
+                    <!-- # tampilan detail data loker -->
                     <header class="page-title-bar">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item active">
-                                    <a href="loker.php?aksi=list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali</a>
+                                    <a href="lamaran.php?aksi=list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali</a>
                                 </li>
                             </ol>
                         </nav>
                         <div class="d-md-flex align-items-md-start">
-                            <h1 class="page-title mr-sm-auto"> Tambah Data loker </h1>
+                            <h1 class="page-title mr-sm-auto"> Daftar pelamar kerja</h1>
                         </div>
                     </header>
+                    <div id="accordion2" class="card-expansion">
+                        <div class="card card-expansion-item">
+                            <div class="card-header border-0" id="headingOne2">
+                                <button class="btn btn-reset d-flex justify-content-between w-100 collapsed" data-toggle="collapse" data-target="#collapseOne2" aria-expanded="false" aria-controls="collapseOne2"><span>Data lowongan kerja</span> <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span></button>
+                            </div>
+                            <div id="collapseOne2" class="collapse" aria-labelledby="headingOne2" data-parent="#accordion2">
+                                <div class="card-body pt-0">
+                                    <div class="card-body">
+                                        <header class="page-title-bar">
+                                            <div class="row text-center text-sm-left">
+                                                <div class="col-sm-auto col-12 mb-2">
+                                                    <span class="tile tile-xl bg-<?= $status ?>">LK</span>
+                                                </div>
 
-                    <form method="post">
-                        <div class="section-block">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="publisher">
-                                        <input type="hidden" name="id_loker" id="id_loker">
-                                        <label for="judul" class="publisher-label">Judul loker</label>
-                                        <div class="publisher-input">
-                                            <textarea name="judul_loker" class="form-control" placeholder="Tulis judul loker" required></textarea>
-                                        </div>
-                                        <div class="publisher-actions">
-                                            <div class="publisher-tools mr-auto"> </div>
-                                            <button name="simpan" type="submit" class="btn btn-primary mr-3">Publish</button>
-                                            <a href="loker.php?aksi=list" class="btn btn-light">Batal</a>
-                                        </div>
+                                                <div class="col">
+                                                    <h1 class="page-title"> <?= $loker['judul_loker'] ?> </h1>
+
+                                                    <ul class="timeline timeline-fluid mt-4">
+                                                        <li class="timeline-item">
+                                                            <div class="timeline-figure">
+                                                                <span class="tile tile-circle tile-sm"><i class="fas fa-user-graduate fa-lg"></i></span>
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <p class="mb-0">
+                                                                            Pendidikan : <a href="#"><?= $loker['pendidikan'] ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="timeline-item">
+                                                            <div class="timeline-figure">
+                                                                <span class="tile tile-circle tile-sm"><i class="fa fa-tasks fa-lg"></i></span>
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <p class="mb-0">
+                                                                            Jenis Pekerjaan : <a href="#"><?= $loker['jenis_pekerjaan'] ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="timeline-item">
+                                                            <div class="timeline-figure">
+                                                                <span class="tile tile-circle tile-sm"><i class="fa fa-money-bill-wave fa-lg"></i></span>
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <p class="mb-0">
+                                                                            Gaji : <a href="#">Rp. <?= number_format($loker['gaji']) ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="timeline-item">
+                                                            <div class="timeline-figure">
+                                                                <span class="tile tile-circle tile-sm bg-<?= $status ?>"><i class="far fa-calendar-times fa-lg"></i></span>
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <p class="mb-0">
+                                                                            Tgl Berlaku Loker : <a href="#"> <?= date("d F, Y", strtotime($loker['tgl_berlaku'])) ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="timeline-item">
+                                                            <div class="timeline-figure">
+                                                                <span class="tile tile-circle tile-sm"><i class="far fa-calendar-alt fa-lg"></i></span>
+                                                            </div>
+                                                            <div class="timeline-body">
+                                                                <div class="media">
+                                                                    <div class="media-body">
+                                                                        <p class="mb-0">
+                                                                            Tgl Update : <a href="#"> <?= date("d F, Y", strtotime($loker['tgl_update'])) ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </header>
+                                    </div>
+                                    <div class="card-body border-top">
+                                        <?= $loker['deskripsi_pekerjaan'] ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="section-block">
-                            <div class="card">
-                                <div class="card card-fluid">
-                                    <textarea name="deskripsi_pekerjaan" data-toggle="summernote" data-placeholder="Tuliskan deskripsi pekerjaan disni..." data-height="500"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- # tampilan Tambah data loker -->
+                    </div>
 
-                <?php } else if ($view == 'edit') {
-                    // menangkap id yang akan di edit dari url 
-                    $id = $_GET['id'];
-                    // ambil data berdasarkan id yang dikirim url lalu tampilkan di form edit
-                    $sql = $koneksi->query("SELECT * FROM tbl_user WHERE id_user = '$id'");
-                    $data = $sql->fetch_assoc();
-
-                    // Syntax untuk update/edit data ke tbl_user jika tombol simpan di tekan
-                    if (isset($_POST['update'])) {
-                        $username = $_POST['username'];
-                        $nama_user = $_POST['nama_user'];
-                        $pass = $_POST['pass'];
-
-                        $query_simpan = $koneksi->query("UPDATE tbl_user SET username='$username', pass='$pass', nama_user='$nama_user' WHERE id_user = '$id'");
-
-                        if ($query_simpan) {
-                            echo "<script>alert('Data berhasil diedit !')</script>";
-                            echo "<script>location='loker.php?aksi=list'</script>";
-                        } else {
-                            echo "<script>alert('Data gagal diedit !')</script>";
-                            echo "<script>location='loker.php?aksi=edit&id=$id'</script>";
-                        }
-                    }  ?>
-
-                    <!-- # tampilan Edit data loker -->
-                    <header class="page-title-bar">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active">
-                                    <a href="loker.php?aksi=list"><i class="breadcrumb-icon fa fa-angle-left mr-2"></i> Kembali</a>
-                                </li>
-                            </ol>
-                        </nav>
-                        <div class="d-md-flex align-items-md-start">
-                            <h1 class="page-title mr-sm-auto"> Edit Data loker </h1>
-                        </div>
-                    </header>
                     <div class="page-section">
                         <div class="card card-fluid">
                             <div lass="card">
@@ -203,19 +231,33 @@ include "_menu.php";
                     </div>
                     <!-- # tampilan Edit data loker -->
 
-                <?php } else if ($view == 'hapus') { ?>
-                    <!-- # syntax Hapus data loker -->
+                <?php } else if ($view == 'acc') { ?>
+                    <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_hapus = $koneksi->query("delete from tbl_user where id_user = '$id' ");
-                    if ($query_hapus) {
-                        echo "<script>alert('Data berhasil dihapus dari database !')</script>";
+                    $query_udapte = $koneksi->query("update tbl_lamaran_kerja SET status='Diterima' where id_lamaran = '$id' ");
+                    if ($query_udapte) {
+                        echo "<script>alert('Data lamaran berhasil diterima !')</script>";
                     } else {
-                        echo "<script>alert('Data gagal dihapus dari database !')</script>";
+                        echo "<script>alert('Data lamaran gagal diterima !')</script>";
                     }
-                    echo "<script>location='loker.php?aksi=list'</script>";
+                    echo "<script>location='lamaran.php?aksi=list'</script>";
                     ?>
-                    <!-- # Syntax Hapus data loker -->
+                    <!-- # Syntax udapte data loker -->
+
+                <?php } else if ($view == 'tolak') { ?>
+                    <!-- # syntax udapte data loker -->
+                    <?php
+                    $id = $_GET['id'];
+                    $query_udapte = $koneksi->query("update tbl_lamaran_kerja SET status='Ditolak' where id_lamaran = '$id' ");
+                    if ($query_udapte) {
+                        echo "<script>alert('Data lamaran berhasil ditolak !')</script>";
+                    } else {
+                        echo "<script>alert('Data lamaran gagal ditolak !')</script>";
+                    }
+                    echo "<script>location='lamaran.php?aksi=list'</script>";
+                    ?>
+                    <!-- # Syntax udapte data loker -->
                 <?php } ?>
 
 

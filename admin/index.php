@@ -10,9 +10,9 @@ include "_menu.php";
           <img class="img-fluid" src="../assets/images/illustration/img-6.svg" alt="" style="max-width: 300px">
         </div>
         <h3 class="state-header"> Halaman Utama. </h3>
-        <p class="state-description lead text-muted"> Use the button below to add your awesomething, aperiam ex veniam suscipit porro ab saepe nobis odio. </p>
+        <p class="state-description lead text-muted"> Jika ada poisi lowongan terbuka segera </p>
         <div class="state-action">
-          <a href="#" class="btn btn-primary">Posting Lowongan Kerja</a>
+          <a href="loker.php?aksi=tambah" class="btn btn-primary">Posting Lowongan Kerja</a>
         </div>
       </div>
     </div>

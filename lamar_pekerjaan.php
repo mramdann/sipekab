@@ -17,7 +17,7 @@ if (isset($_GET['loker_id'])) {
     // Syntax untuk menyimpan data ke tbl_lamaran_pekerjaan jika tombol simpan ditekan
     if (isset($_POST['kirim'])) {
 
-        $idloker            = $id_loker;
+        $nopendaftaran      = "CK-" . date('dmyHi');
         $nama_lengkap       = $_POST['nama_lengkap'];
         $jk                 = $_POST['jk'];
         $status_nikah       = $_POST['status_nikah'];
@@ -26,19 +26,35 @@ if (isset($_GET['loker_id'])) {
         $pendidikan_terakhir = $_POST['pendidikan_terakhir'];
         $alamat             = $_POST['alamat'];
         $deskripsi          = $_POST['deskripsi'];
-        $cv                 = $_FILES['cv']['name'];
-        $lokasi             = $_FILES['cv']['tmp_name'];
-        move_uploaded_file($lokasi, "cv/" . $cv);
 
-        $query_simpan = $koneksi->query("INSERT INTO tbl_lamaran_pekerjaan (id_loker, nama_lengkap, jk, status_nikah, email, tlp, pendidikan_terakhir, alamat, deskripsi, cv) 
-                                    VALUES ('$id_loker', '$nama_lengkap','$jk','$status_nikah','$email','$tlp','$pendidikan_terakhir','$alamat','$deskripsi','$cv')");
+        $cek = $koneksi->query("SELECT * FROM tbl_lamaran_pekerjaan WHERE id_loker ='$id_loker' AND email = '$email'")->num_rows;
 
-        if ($query_simpan) {
-            echo "<script>alert('Lamaran berhasil di kirim !')</script>";
-            echo "<script>location='lamar_pekerjaan.php?&aksi=sukses'</script>";
+        echo $cek;
+        if ($cek >= 1) {
+            echo    '<div class="page-message" role="alert">
+                        <i class="fas fa-info-circle"></i> Gagal kirim lamaran : Email yang di inputkan sudah pernah di daftrakan.
+                        <a href="#" class="btn btn-sm btn-icon btn-warning ml-1" aria-label="Close" onclick="$(this).parent().fadeOut()">
+                            <span aria-hidden="true">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </a>
+                    </div>';
         } else {
-            echo "<script>alert('Lamaran gagal di kirim !')</script>";
-            echo "<script>location='lamar_pekerjaan.php?loker_id=$id_loker'</script>";
+
+            $cv                 = $_FILES['cv']['name'];
+            $lokasi             = $_FILES['cv']['tmp_name'];
+            move_uploaded_file($lokasi, "cv/" . $cv);
+
+            $query_simpan = $koneksi->query("INSERT INTO tbl_lamaran_pekerjaan (id_loker, no_pendaftaran, nama_lengkap, jk, status_nikah, email, tlp, pendidikan_terakhir, alamat, deskripsi, cv, status) 
+                                        VALUES ('$id_loker','$nopendaftaran','$nama_lengkap','$jk','$status_nikah','$email','$tlp','$pendidikan_terakhir','$alamat','$deskripsi','$cv','Proses seleksi')");
+
+            if ($query_simpan) {
+                echo "<script>alert('Lamaran berhasil di kirim !')</script>";
+                echo "<script>location='lamar_pekerjaan.php?&sukses=$nopendaftaran'</script>";
+            } else {
+                echo "<script>alert('Lamaran gagal di kirim !')</script>";
+                echo "<script>location='lamar_pekerjaan.php?loker_id=$id_loker'</script>";
+            }
         }
     } ?>
 
@@ -138,13 +154,15 @@ if (isset($_GET['loker_id'])) {
         </div>
     </section>
 
-<?php } else if (isset($_GET['aksi'])) { ?>
+<?php } else if (isset($_GET['sukses'])) { ?>
     <section class="py-5 bg-light">
         <div class="container">
-            <div class="card card-fluid">
-                <div class="card-body">
-                    echo "horey selamat menerima gajih";
-                </div>
+            <div class="jumbotron">
+                <center>
+                    <p class="lead"> Lamaran Berhasil dikirim ! <br> <b>No Pendaftaran kamu adalah :</b> </p>
+                    <h1 class="display-1"> <?= $_GET['sukses'] ?> </h1>
+                    <p class="lead"> Harap catat dan simpan no pendataran kamu ! No pendaftaran diatas diperlukan untuk mengecek hasil seleksi lamaran pekerjaan kamu di menu <b><a href="pengumuman.php">pengumuman</a></b></p>
+                </center>
             </div>
         </div>
     </section>
