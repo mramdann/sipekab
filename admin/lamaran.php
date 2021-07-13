@@ -202,30 +202,6 @@ include "_menu.php";
                         <div class="card card-fluid">
                             <div lass="card">
                                 <div class="card-body">
-                                    <!-- 
-                                    <form method="POST">
-                                        <fieldset>
-                                            <legend>Form Edit User</legend>
-                                            <div class="form-group">
-                                                <label for="username">Username </label>
-                                                <input type="text" class="form-control" name="username" id="username" value="<?= $data['username'] ?>" placeholder="Input username" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="nama_user">Nama Lengkap </label>
-                                                <input type="text" class="form-control" name="nama_user" id="nama_user" value="<?= $data['nama_user'] ?>" placeholder="Input nama lengkap" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pass">Password </label>
-                                                <input type="password" class="form-control" name="pass" id="pass" value="<?= $data['pass'] ?>" placeholder="Input password" required>
-                                            </div>
-                                        </fieldset>
-                                        <div class="form-actions text-center">
-                                            <button class="btn btn-primary" type="submit" name="update">Simpan</button>
-                                        </div>
-
-                                    </form> -->
-
-
 
 
                                     <table class="table table-responsive">
@@ -243,7 +219,8 @@ include "_menu.php";
                                         </thead>
                                         <tbody>
                                             <?php $no = 1;
-                                            $query = $koneksi->query("select * from tbl_lamaran_pekerjaan");
+                                            $id = $_GET['id'];
+                                            $query = $koneksi->query("select * from tbl_lamaran_pekerjaan WHERE id_loker= '$id'");
                                             while ($data = $query->fetch_assoc()) {
                                             ?>
                                                 <tr>
