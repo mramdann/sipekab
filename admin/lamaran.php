@@ -202,7 +202,7 @@ include "_menu.php";
                         <div class="card card-fluid">
                             <div lass="card">
                                 <div class="card-body">
-
+                                    <!-- 
                                     <form method="POST">
                                         <fieldset>
                                             <legend>Form Edit User</legend>
@@ -223,7 +223,96 @@ include "_menu.php";
                                             <button class="btn btn-primary" type="submit" name="update">Simpan</button>
                                         </div>
 
-                                    </form>
+                                    </form> -->
+
+
+
+
+                                    <table class="table table-responsive">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">NO</th>
+                                                <th scope="col">Nama</th>
+                                                <th scope="col">Jenis Kelami</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">No Telpon</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Pendidikan Terakhir</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $no = 1;
+                                            $query = $koneksi->query("select * from tbl_lamaran_pekerjaan");
+                                            while ($data = $query->fetch_assoc()) {
+                                            ?>
+                                                <tr>
+                                                    <th scope="row"><?= $no ?></th>
+                                                    <td> <?= $data['nama_lengkap'] ?> </td>
+                                                    <td> <?= $data['jk'] ?></td>
+                                                    <td> <?= $data['status_nikah'] ?></td>
+                                                    <td> <?= $data['tlp'] ?></td>
+                                                    <td> <?= $data['email'] ?></td>
+                                                    <td> <?= $data['pendidikan_terakhir'] ?>/td>
+                                                    <td>
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<?= $data['id_lamaran'] ?>">
+                                                            Detail
+                                                        </button>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="<?= $data['id_lamaran                                                                                                                     '] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body ">
+
+                                                                        <div class="card">
+                                                                            <main class="auth">
+                                                                                <div class="container text-center mb-3">
+                                                                                    <div class="container text-center mb-3">
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <form class="card auth-form">
+
+                                                                                    <div class="text-center">
+                                                                                        <span class="tile tile-circle tile-xxl"><i class="fas fa-user fa-lg"></i></span>
+                                                                                        <h2 class="card-title mt-4"> <?= $data['no_pendaftaran'] ?> </h2>
+                                                                                        <p> <?= $data['nama_lengkap'] ?> </p>
+                                                                                        <p><?= $data['jk'] ?></p>
+                                                                                        <p><?= $data['pendidikan_terakhir'] ?></p>
+                                                                                        <p><?= $data['status_nikah'] ?></p>
+                                                                                        <p><?= $data['tlp'] ?></p>
+                                                                                        <p><?= $data['email'] ?></p>
+                                                                                        <p><?= $data['alamat'] ?></p>
+                                                                                        <p><?= $data['deskripsi'] ?></p>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </main>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php $no++;
+                                            } ?>
+
+                                        </tbody>
+                                    </table>
+
                                 </div>
                             </div>
 
