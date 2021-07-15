@@ -282,7 +282,11 @@ include "_menu.php";
                                                     <br><?= $data['tlp'] ?>
                                                     <br><?= $data['alamat'] ?>
                                                     <br><?= $data['pendidikan_terakhir'] ?>
-                                                    <br><?= $data['deskripsi'] ?>
+                                                    <br>
+                                                    <br>
+
+                                                    <p><?= $data['deskripsi'] ?></p>
+
                                                 </div>
 
                                             <?php $no++;
@@ -323,7 +327,7 @@ include "_menu.php";
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("update from tbl_lamaran_pekerjaan SET status='Diterima' where id_lamaran = '$id' ");
+                    $query_udapte = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Diterima' WHERE id_lamaran = '$id' ");
                     if ($query_udapte) {
                         echo "<script>alert('Data lamaran berhasil diterima !')</script>";
                     } else {
@@ -337,13 +341,14 @@ include "_menu.php";
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("update from tbl_lamaran_pekerjaan SET status='Ditolak' where id_lamaran = '$id' ");
+                    $query_udapte = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Ditolak' WHERE id_lamaran = '$id' ");
                     if ($query_udapte) {
                         echo "<script>alert('Data lamaran berhasil ditolak !')</script>";
                     } else {
                         echo "<script>alert('Data lamaran gagal ditolak !')</script>";
                     }
                     echo "<script>location='lamaran.php?aksi=list'</script>";
+
                     ?>
                     <!-- # Syntax udapte data loker -->
 
@@ -351,7 +356,7 @@ include "_menu.php";
                     <!-- # syntax delete data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("delete from tbl_lamaran_pekerjaan where id_lamaran = '$id' ");
+                    $query_udapte = $koneksi->query("DELETE FROM tbl_lamaran_pekerjaan WHERE id_lamaran= '$id'");
                     if ($query_udapte) {
                         echo "<script>alert('Data lamaran berhasil di hapus !')</script>";
                     } else {
