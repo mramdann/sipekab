@@ -232,56 +232,13 @@ include "_menu.php";
                                                     <td> <?= $data['email'] ?></td>
                                                     <td> <?= $data['pendidikan_terakhir'] ?>/td>
                                                     <td>
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#<?= $data['id_lamaran'] ?>">
-                                                            Detail
-                                                        </button>
 
-                                                        <!-- Modal -->
-                                                        <div class="modal fade" id="<?= $data['id_lamaran                                                                                                                     '] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body ">
+                                                        <a href="lamaran.php?aksi=detail_pelamar&id=<?= $data['id_lamaran'] ?>">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">
+                                                                Detail
+                                                            </button>
+                                                        </a>
 
-                                                                        <div class="card">
-                                                                            <main class="auth">
-                                                                                <div class="container text-center mb-3">
-                                                                                    <div class="container text-center mb-3">
-
-                                                                                    </div>
-                                                                                </div>
-                                                                                <form class="card auth-form">
-
-                                                                                    <div class="text-center">
-                                                                                        <span class="tile tile-circle tile-xxl"><i class="fas fa-user fa-lg"></i></span>
-                                                                                        <h2 class="card-title mt-4"> <?= $data['no_pendaftaran'] ?> </h2>
-                                                                                        <p> <?= $data['nama_lengkap'] ?> </p>
-                                                                                        <p><?= $data['jk'] ?></p>
-                                                                                        <p><?= $data['pendidikan_terakhir'] ?></p>
-                                                                                        <p><?= $data['status_nikah'] ?></p>
-                                                                                        <p><?= $data['tlp'] ?></p>
-                                                                                        <p><?= $data['email'] ?></p>
-                                                                                        <p><?= $data['alamat'] ?></p>
-                                                                                        <p><?= $data['deskripsi'] ?></p>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </main>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                     </td>
                                                 </tr>
                                             <?php $no++;
@@ -295,13 +252,78 @@ include "_menu.php";
 
                         </div>
                     </div>
-                    <!-- # tampilan Edit data loker -->
+
+                    <!-- # tampilan  data detial pelamar -->
+                <?php } else if ($view == 'detail_pelamar') { ?>
+
+
+                    <div class="conainer">
+                        <div class="col">
+                            <div class="row">
+                                <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row no-gutters">
+
+                                        <?php $no = 1;
+                                        $id = $_GET['id'];
+                                        $query = $koneksi->query("select * from tbl_lamaran_pekerjaan WHERE id_lamaran= '$id'");
+                                        while ($data = $query->fetch_assoc()) {
+                                        ?>
+
+                                            <div class="col-md-4">
+                                                <span class="tile tile-circle tile-xxl"><i class="fas fa-user fa-lg"></i></span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= $data['no_pendaftaran'] ?></h5>
+                                                    <br><?= $data['nama_lengkap'] ?>
+                                                    <br><?= $data['jk'] ?>
+                                                    <br><?= $data['status_nikah'] ?>
+                                                    <br><?= $data['email'] ?>
+                                                    <br><?= $data['tlp'] ?>
+                                                    <br><?= $data['alamat'] ?>
+                                                    <br><?= $data['pendidikan_terakhir'] ?>
+                                                    <br><?= $data['deskripsi'] ?>
+                                                </div>
+
+                                            <?php $no++;
+                                        } ?>
+
+
+
+
+
+
+                                            <a href="lamaran.php?aksi=acc&id=<?= $data['id_lamaran'] ?>">
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="">
+                                                    Terima
+                                                </button>
+                                            </a>
+                                            <a href="lamaran.php?aksi=tolak&id=<?= $data['id_lamaran'] ?>">
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="">
+                                                    Tolak
+                                                </button>
+                                            </a>
+                                            <a href="lamaran.php?aksi=hapus&id=<?= $data['id_lamaran'] ?>">
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="">
+                                                    Hapus
+                                                </button>
+                                            </a>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
 
                 <?php } else if ($view == 'acc') { ?>
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("update tbl_lamaran_kerja SET status='Diterima' where id_lamaran = '$id' ");
+                    $query_udapte = $koneksi->query("update from tbl_lamaran_pekerjaan SET status='Diterima' where id_lamaran = '$id' ");
                     if ($query_udapte) {
                         echo "<script>alert('Data lamaran berhasil diterima !')</script>";
                     } else {
@@ -315,7 +337,7 @@ include "_menu.php";
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("update tbl_lamaran_kerja SET status='Ditolak' where id_lamaran = '$id' ");
+                    $query_udapte = $koneksi->query("update from tbl_lamaran_pekerjaan SET status='Ditolak' where id_lamaran = '$id' ");
                     if ($query_udapte) {
                         echo "<script>alert('Data lamaran berhasil ditolak !')</script>";
                     } else {
@@ -324,7 +346,26 @@ include "_menu.php";
                     echo "<script>location='lamaran.php?aksi=list'</script>";
                     ?>
                     <!-- # Syntax udapte data loker -->
+
+                <?php } else if ($view == 'hapus') { ?>
+                    <!-- # syntax delete data loker -->
+                    <?php
+                    $id = $_GET['id'];
+                    $query_udapte = $koneksi->query("delete from tbl_lamaran_pekerjaan where id_lamaran = '$id' ");
+                    if ($query_udapte) {
+                        echo "<script>alert('Data lamaran berhasil di hapus !')</script>";
+                    } else {
+                        echo "<script>alert('Data lamaran gagal di hapus !')</script>";
+                    }
+                    echo "<script>location='lamaran.php?aksi=list'</script>";
+                    ?>
+                    <!-- # Syntax udapte data loker -->
+
+
+
                 <?php } ?>
+
+
 
 
             </div>
