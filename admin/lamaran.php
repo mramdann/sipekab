@@ -214,6 +214,7 @@ include "_menu.php";
                                                 <th scope="col">No Telpon</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Pendidikan Terakhir</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -231,6 +232,7 @@ include "_menu.php";
                                                     <td> <?= $data['tlp'] ?></td>
                                                     <td> <?= $data['email'] ?></td>
                                                     <td> <?= $data['pendidikan_terakhir'] ?>/td>
+                                                    <td> <?= $data['status'] ?>/td>
                                                     <td>
 
                                                         <a href="lamaran.php?aksi=detail_pelamar&id=<?= $data['id_lamaran'] ?>">
@@ -297,17 +299,17 @@ include "_menu.php";
 
 
 
-                                            <a href="lamaran.php?aksi=acc&id=<?= $data['id_lamaran'] ?>">
+                                            <a href="lamaran.php?aksi=acc&id=<?= $id ?>">
                                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="">
                                                     Terima
                                                 </button>
                                             </a>
-                                            <a href="lamaran.php?aksi=tolak&id=<?= $data['id_lamaran'] ?>">
+                                            <a href="lamaran.php?aksi=tolak&id=<?= $id ?>">
                                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="">
                                                     Tolak
                                                 </button>
                                             </a>
-                                            <a href="lamaran.php?aksi=hapus&id=<?= $data['id_lamaran'] ?>">
+                                            <a href="lamaran.php?aksi=hapus&id=<?= $id ?>">
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="">
                                                     Hapus
                                                 </button>
@@ -333,7 +335,7 @@ include "_menu.php";
                     } else {
                         echo "<script>alert('Data lamaran gagal diterima !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=list'</script>";
+                    echo "<script>location='lamaran.php?aksi=detail'</script>";
                     ?>
                     <!-- # Syntax udapte data loker -->
 
@@ -347,7 +349,7 @@ include "_menu.php";
                     } else {
                         echo "<script>alert('Data lamaran gagal ditolak !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=list'</script>";
+                    echo "<script>location='lamaran.php?aksi=detail'</script>";
 
                     ?>
                     <!-- # Syntax udapte data loker -->
@@ -362,7 +364,7 @@ include "_menu.php";
                     } else {
                         echo "<script>alert('Data lamaran gagal di hapus !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=list'</script>";
+                    echo "<script>location='lamaran.php?aksi=detail'</script>";
                     ?>
                     <!-- # Syntax udapte data loker -->
 
