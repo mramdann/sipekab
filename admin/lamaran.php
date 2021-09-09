@@ -199,143 +199,103 @@ include "_menu.php";
                     </div>
 
                     <div class="page-section">
-                        <div class="card card-fluid">
-                            <div lass="card">
-                                <div class="card-body">
+                        <div class="card">
+                            <div id="accordion" class="card-expansion">
+                                <?php $no = 1;
+                                $id = $_GET['id'];
+                                $query = $koneksi->query("select * from tbl_lamaran_pekerjaan WHERE id_loker= '$id' order by id_lamaran desc");
+                                while ($data = $query->fetch_assoc()) {
+                                    if ($data['status'] == "Proses seleksi") {
+                                        $warna = "warning";
+                                    } else if ($data['status'] == "Diterima") {
+                                        $warna = "success";
+                                    } else {
+                                        $warna = "danger";
+                                    }
+                                ?>
 
-
-                                    <table class="table table-responsive">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th scope="col">NO</th>
-                                                <th scope="col">Nama</th>
-                                                <th scope="col">Jenis Kelami</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">No Telpon</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Pendidikan Terakhir</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 1;
-                                            $id = $_GET['id'];
-                                            $query = $koneksi->query("select * from tbl_lamaran_pekerjaan WHERE id_loker= '$id'");
-                                            while ($data = $query->fetch_assoc()) {
-                                            ?>
-                                                <tr>
-                                                    <th scope="row"><?= $no ?></th>
-                                                    <td> <?= $data['nama_lengkap'] ?> </td>
-                                                    <td> <?= $data['jk'] ?></td>
-                                                    <td> <?= $data['status_nikah'] ?></td>
-                                                    <td> <?= $data['tlp'] ?></td>
-                                                    <td> <?= $data['email'] ?></td>
-                                                    <td> <?= $data['pendidikan_terakhir'] ?>/td>
-                                                    <td> <?= $data['status'] ?>/td>
-                                                    <td>
-
-                                                        <a href="lamaran.php?aksi=detail_pelamar&id=<?= $data['id_lamaran'] ?>">
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="">
-                                                                Detail
-                                                            </button>
-                                                        </a>
-
-                                                    </td>
-                                                </tr>
-                                            <?php $no++;
-                                            } ?>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- # tampilan  data detial pelamar -->
-                <?php } else if ($view == 'detail_pelamar') { ?>
-
-
-                    <div class="conainer">
-                        <div class="col">
-                            <div class="row">
-                                <div class="card mb-3" style="max-width: 540px;">
-                                    <div class="row no-gutters">
-
-                                        <?php $no = 1;
-                                        $id = $_GET['id'];
-                                        $query = $koneksi->query("select * from tbl_lamaran_pekerjaan WHERE id_lamaran= '$id'");
-                                        while ($data = $query->fetch_assoc()) {
-                                        ?>
-
-                                            <div class="col-md-4">
-                                                <span class="tile tile-circle tile-xxl"><i class="fas fa-user fa-lg"></i></span>
+                                    <div class="card card-expansion-item">
+                                        <div class="card-header border-0" id="heading<?= $no ?>">
+                                            <button class="btn btn-reset d-flex justify-content-between w-100 collapsed" data-toggle="collapse" data-target="#collapse<?= $no ?>" aria-expanded="false" aria-controls="collapse<?= $no ?>"><a href="#" class="btn-account" role="button">
+                                                    <div class="user-avatar">
+                                                        <i class="far fa-user"></i>
+                                                    </div>
+                                                    <div class="account-summary">
+                                                        <h5 class="account-name mb-2"> <?= $data['nama_lengkap'] ?> </h5>
+                                                        <p class="account-description"> <span class="badge badge-<?= $warna ?>"><?= $data['status'] ?></span> · <?= $data['jk'] ?> <span class="mx-1"> · </span> <?= $data['pendidikan_terakhir'] ?></span></p>
+                                                    </div>
+                                                </a>
+                                                <span class="collapse-indicator"><i class="fa fa-fw fa-chevron-down"></i></span>
+                                            </button>
+                                        </div>
+                                        <div id="collapse<?= $no ?>" class="collapse" aria-labelledby="heading<?= $no ?>" data-parent="#accordion">
+                                            <div class="card-body pt-0">
+                                                <h2 class="section-title"> Detail Pelamar </h2>
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td width="210px">Nama Lengkap</td>
+                                                        <td><?= $data['nama_lengkap'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Jenis Kelamin</td>
+                                                        <td><?= $data['jk'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Status Pernikahan </td>
+                                                        <td><?= $data['status_nikah'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Email</td>
+                                                        <td><?= $data['email'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Nomor Telepon </td>
+                                                        <td><?= $data['tlp'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Pendidikan Terakhir</td>
+                                                        <td><?= $data['pendidikan_terakhir'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Alamat</td>
+                                                        <td><?= $data['alamat'] ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Ringkasan Profile</td>
+                                                        <td><cite><?= $data['deskripsi'] ?></cite></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="210px">Berkas Lamaran (CV)</td>
+                                                        <td><a target="_blank" href="../cv/<?= $data['cv'] ?>"><i class="fas fa-file"></i> <?= $data['cv'] ?></a></td>
+                                                    </tr>
+                                                </table>
                                             </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><?= $data['no_pendaftaran'] ?></h5>
-                                                    <br><?= $data['nama_lengkap'] ?>
-                                                    <br><?= $data['jk'] ?>
-                                                    <br><?= $data['status_nikah'] ?>
-                                                    <br><?= $data['email'] ?>
-                                                    <br><?= $data['tlp'] ?>
-                                                    <br><?= $data['alamat'] ?>
-                                                    <br><?= $data['pendidikan_terakhir'] ?>
-                                                    <br>
-                                                    <br>
-
-                                                    <p><?= $data['deskripsi'] ?></p>
-
+                                            <?php if ($data['status'] == "Proses seleksi") {  ?>
+                                                <div class="card-footer">
+                                                    <a href="lamaran.php?aksi=acc&id=<?= $data['id_lamaran'] ?>" class="card-footer-item card-footer-item-bordered text-success">Terima</a>
+                                                    <a href="lamaran.php?aksi=tolak&id=<?= $data['id_lamaran'] ?>" class="card-footer-item card-footer-item-bordered text-warning">Tolak</a>
+                                                    <a href="lamaran.php?aksi=hapus&id=<?= $data['id_lamaran'] ?>" class="card-footer-item card-footer-item-bordered text-danger">Hapus</a>
                                                 </div>
-
-                                            <?php $no++;
-                                        } ?>
-
-
-
-
-
-
-                                            <a href="lamaran.php?aksi=acc&id=<?= $id ?>">
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="">
-                                                    Terima
-                                                </button>
-                                            </a>
-                                            <a href="lamaran.php?aksi=tolak&id=<?= $id ?>">
-                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="">
-                                                    Tolak
-                                                </button>
-                                            </a>
-                                            <a href="lamaran.php?aksi=hapus&id=<?= $id ?>">
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="">
-                                                    Hapus
-                                                </button>
-                                            </a>
-                                            </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php $no++;
+                                } ?>
                             </div>
                         </div>
                     </div>
-
-
-
-
 
                 <?php } else if ($view == 'acc') { ?>
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Diterima' WHERE id_lamaran = '$id' ");
-                    if ($query_udapte) {
+                    $query_acc = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Diterima' WHERE id_lamaran = '$id' ");
+                    if ($query_acc) {
                         echo "<script>alert('Data lamaran berhasil diterima !')</script>";
                     } else {
                         echo "<script>alert('Data lamaran gagal diterima !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=detail'</script>";
+                    echo "<script>window.history.back();location.reload();</script>";
                     ?>
                     <!-- # Syntax udapte data loker -->
 
@@ -343,13 +303,13 @@ include "_menu.php";
                     <!-- # syntax udapte data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Ditolak' WHERE id_lamaran = '$id' ");
-                    if ($query_udapte) {
+                    $query_tolak = $koneksi->query("UPDATE tbl_lamaran_pekerjaan SET status='Ditolak' WHERE id_lamaran = '$id' ");
+                    if ($query_tolak) {
                         echo "<script>alert('Data lamaran berhasil ditolak !')</script>";
                     } else {
                         echo "<script>alert('Data lamaran gagal ditolak !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=detail'</script>";
+                    echo "<script>window.history.back();location.reload();</script>";
 
                     ?>
                     <!-- # Syntax udapte data loker -->
@@ -358,23 +318,19 @@ include "_menu.php";
                     <!-- # syntax delete data loker -->
                     <?php
                     $id = $_GET['id'];
-                    $query_udapte = $koneksi->query("DELETE FROM tbl_lamaran_pekerjaan WHERE id_lamaran= '$id'");
-                    if ($query_udapte) {
+                    $query_hapus = $koneksi->query("DELETE FROM tbl_lamaran_pekerjaan WHERE id_lamaran= '$id'");
+                    if ($query_hapus) {
                         echo "<script>alert('Data lamaran berhasil di hapus !')</script>";
                     } else {
                         echo "<script>alert('Data lamaran gagal di hapus !')</script>";
                     }
-                    echo "<script>location='lamaran.php?aksi=detail'</script>";
+                    echo "<script>window.history.back();location.reload();</script>";
                     ?>
                     <!-- # Syntax udapte data loker -->
 
 
 
                 <?php } ?>
-
-
-
-
             </div>
         </div>
 </main>

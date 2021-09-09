@@ -34,7 +34,7 @@
                 <a href=".">
                     <img class="rounded" src="assets/images/logo.jpg" alt="" height="30">
                 </a>
-                <a class="navbar-btn btn btn-subtle-success ml-auto order-lg-2" href="pengumuman.php">Pengumuman</a>
+                <a class="navbar-btn btn btn-subtle-success ml-auto order-lg-2" href="admin">Admin</a>
                 <div class="navbar-collapse collapse" id="navbarTogglerDemo01">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item mr-lg-3 active">
@@ -44,10 +44,7 @@
                             <a class="nav-link py-2" href="loker.php">Lowongan Kerja</a>
                         </li>
                         <li class="nav-item mr-lg-3 active">
-                            <a class="nav-link py-2" href="about.php">Tentang Kami</a>
-                        </li>
-                        <li class="nav-item mr-lg-3 active">
-                            <a class="nav-link py-2" href="admin">Admin</a>
+                            <a class="nav-link py-2" href="pengumuman.php?aksi=list">Pengumuman</a>
                         </li>
                     </ul>
                 </div>

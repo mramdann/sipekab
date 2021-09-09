@@ -28,7 +28,7 @@
             <a href="loker.php?aksi=list" class="menu-link"><span class="menu-icon oi oi-browser"></span> <span class="menu-text">Posting Lowongan</span></a>
           </li>
           <li class="menu-item">
-            <a href="lamaran.php?aksi=list" class="menu-link"><span class="menu-icon fas fa-clipboard-check"></span> <span class="menu-text">Data Pelamar</span></a>
+            <a href="lamaran.php?aksi=list" class="menu-link"><span class="menu-icon fas fa-clipboard-check"></span> <span class="menu-text">Seleksi Lamaran</span></a>
           </li>
           <li class="menu-item">
             <a href="laporan.php?aksi=list" class="menu-link"><span class="menu-icon fas fa-print"></span> <span class="menu-text">Laporan</span></a>
