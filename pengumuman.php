@@ -78,7 +78,10 @@ include "koneksi.php";
                 $status = "success";
             } ?>
 
-            <div class="page-section">
+            <h1 class="page-title text-center"> Pengumuman Hasil Seleksi </h1>
+            <h1 class="page-title text-center"> <?= $loker['judul_loker'] ?> </h1>
+
+            <div class="page-section mt-4">
                 <div class="card">
                     <div id="accordion" class="card-expansion">
                         <?php $no = 1;
